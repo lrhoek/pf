@@ -12,9 +12,18 @@ use Closure;
  */
 function iterate(int $count, callable $c): Closure {
 
-    return static function (mixed $init) use ($c, $count) : mixed {
-        while($count-- > 0) $init = $c($init);
+    return static function (mixed $init) use ($c, $count): mixed {
+        while ($count-- > 0) $init = $c($init);
         return $init;
     };
+}
 
+/**
+ * Adds a number to the value at $array[ $key ]
+ * Or sets it if it is null
+ */
+function addset(array $array, int|string $key, int $number) : array {
+    $array[$key] ??= 0;
+    $array[$key] += $number;
+    return $array;
 }

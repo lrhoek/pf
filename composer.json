@@ -1,0 +1,16 @@
+{
+  "name": "lrhoek/pf",
+  "type": "library",
+  "description": "PHP Functions",
+  "require": {
+    "php": ">8.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Lrhoek\\pf\\": "src"
+    },
+    "files": [
+      "src/pf.php"
+      ]
+  }
+}

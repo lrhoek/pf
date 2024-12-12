@@ -3,7 +3,8 @@
   "type": "library",
   "description": "PHP Functions",
   "require": {
-    "php": ">8.0"
+    "php": ">8.0",
+    "crell/fp": "^1.0"
   },
   "autoload": {
     "psr-4": {

@@ -5,16 +5,25 @@ declare(strict_types=1);
 namespace Lrhoek\pf;
 
 use Closure;
+use Crell\fp;
+use Iterator;
+use LimitIterator;
 
 /**
- * Returns a function that runs callable $c $count times over $init
- * Then $init is returned
+ * Return callable for fp\iterate
  */
-function iterate(int $count, callable $c): Closure {
+function iterate(callable $mapper) : callable {
+    return fn($init) => fp\iterate($init, $mapper);
+}
 
-    return static function (mixed $init) use ($c, $count): mixed {
-        while ($count-- > 0) $init = $c($init);
-        return $init;
+/**
+ * Same as fp\ittake, but with offset
+ */
+function ittake(int $offset, int $count = 1) : Closure {
+    return static function (array|Iterator $a) use ($offset, $count) : iterable {
+        yield from is_array($a)
+            ? array_slice($a, $offset, $count)
+            : new LimitIterator($a, $offset, $count);
     };
 }
 
@@ -22,7 +31,7 @@ function iterate(int $count, callable $c): Closure {
  * Adds a number to the value at $array[ $key ]
  * Or sets it if it is null
  */
-function addset(array $array, int|string $key, int $number) : array {
+function add(array $array, int|string $key, int $number) : array {
     $array[$key] ??= 0;
     $array[$key] += $number;
     return $array;

@@ -28,8 +28,19 @@ function ittake(int $offset, int $count = 1) : Closure {
 }
 
 /**
+ * Return callable for usort
+ */
+function usort(callable $c) : callable {
+    return function (array $a) use ($c) {
+        \usort($a, $c);
+        return $a;
+    };
+}
+
+/**
  * Adds a number to the value at $array[ $key ]
  * Or sets it if it is null
+ * @CURSED
  */
 function add(array $array, int|string $key, int $number) : array {
     $array[$key] ??= 0;
